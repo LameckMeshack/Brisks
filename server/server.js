@@ -5,24 +5,6 @@ const csv = require("csv-parser");
 const app = express();
 const port = 5000;
 
-// app.get("/read-csv", (req, res) => {
-//   let data = [];
-//   fs.createReadStream("./sales_data_sample.csv")
-//     .pipe(csv())
-//     .on("data", (row) => {
-//       // Process the data
-//       // Process the data
-//       let processedRow = processData(row);
-//       data.push(processedRow);
-//     })
-//     .on("end", () => {
-//       res.send(data);
-//     })
-//     .on("error", (err) => {
-//       console.error(err);
-//       res.status(500).send("An error occurred while reading the CSV file.");
-//     });
-// });
 
 app.get("/read-csv", (req, res) => {
   let data = {};
@@ -69,6 +51,51 @@ function processData(row) {
     SALES: row["SALES"],
   };
 }
+
+
+// Function to calculate Profit Margin and AOV
+async function calculateMetrics(data) {
+  const metrics = { sales: 0, totalQuantity: 0, totalCost: 0 };
+  let orderCount = 0;
+
+  // Process each row of CSV data
+  for (const row of data) {
+    // Apply filtering if any (assuming 'year' filter example)
+    if (data.year && parseInt(row.YEAR_ID) !== parseInt(data.year)) continue;
+    // ... similar for other filters
+
+    metrics.sales += parseFloat(row.SALES);
+    metrics.totalQuantity += parseFloat(row.QUANTITYORDERED);
+    metrics.totalCost += parseFloat(row.QUANTITYORDERED) * parseFloat(row.PRICEEACH);
+    orderCount++;
+  }
+
+  metrics.profitMargin = (metrics.sales - metrics.totalCost) / metrics.sales;
+  metrics.averageOrderValue = metrics.sales / orderCount;
+
+  return metrics;
+}
+
+// API endpoint (assuming Express.js)
+app.get('/sales-metrics', async (req, res) => {
+  const filterParams = req.query; // Get any filter parameters from query string
+
+  try {
+    // Read CSV data into an array (suitable for smaller datasets)
+    const csvData = [];
+    const csvStream = fs.createReadStream('./sales_data_sample.csv');
+    csvStream.pipe(csv())
+      .on('data', (row) => csvData.push(row))
+      .on('end', async () => {
+        const metrics = await calculateMetrics(csvData);
+        console.log(metrics); // You can remove this for production
+        res.json(metrics);
+      });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error fetching metrics');
+  }
+});
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });

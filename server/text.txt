@@ -1,0 +1,33 @@
+
+
+1. Profit Margin:
+
+This metric reveals the profitability of your sales.
+Calculation:
+
+Profit Margin per Order = (SALES - (QUANTITYORDERED * PRICEEACH)) / SALES
+Visualization:
+
+Create a scatter plot with SALES on the x-axis and Profit Margin on the y-axis. This allows you to identify trends:
+High sales with low margins could indicate aggressive discounting or high production costs.
+Conversely, high margins with lower sales might suggest focusing on customer segments willing to pay a premium.
+Benefits of Analyzing Profit Margin:
+
+Identifies areas for potential cost optimization or improved pricing strategies.
+Provides a more nuanced understanding of sales performance beyond just revenue.
+2. Average Order Value (AOV):
+
+This metric reflects the average amount spent per order.
+Calculation:
+
+Average Order Value = Total Sales / Number of Orders
+Visualization:
+
+Create a bar chart with a bar for each month or quarter (using MONTH_ID or QTR_ID) representing the AOV for that period.
+Alternatively, a line chart can show trends in AOV over time.
+Benefits of Analyzing AOV:
+
+Identifies upselling or cross-selling opportunities.
+Helps understand customer buying behavior and potential for larger orders.
+Provides insights into marketing and promotional effectiveness.
+
