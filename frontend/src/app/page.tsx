@@ -1,5 +1,4 @@
-
-import SalesPieChart  from "./components/SalesPieChart";
+import SalesPieChart from "./components/SalesPieChart";
 
 interface DataItem {
   YEAR_ID: string;
@@ -21,8 +20,8 @@ export default async function Home() {
 
   return (
     <main className="flex min-h-screen  items-center justify-between p-24">
-      <div>
-        <h1 className="text-4xl font-bold">CSV Data</h1>
+      <div className="flex flex-col items-center">
+        <h1 className="text-4xl text-black font-bold">Sales and Year</h1>
         <SalesPieChart data={data} />
       </div>
     </main>
