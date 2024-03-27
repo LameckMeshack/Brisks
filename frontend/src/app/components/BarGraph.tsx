@@ -14,22 +14,44 @@ interface DataItem {
 }
 
 const BarGraph: React.FC<Props> = ({ data }) => {
+  // Define a mapping of years to colors
+  const colorMap = {
+    "2003": "#1f77b4",
+    "2004": "#ff7f0e",
+    "2005": "#2ca02c",
+  };
+
+  // Generate an array of colors based on the year
+  const colors = data.map((item) => colorMap[item.YEAR_ID]);
+
   const chartData = {
     labels: data.map((item) => item.YEAR_ID),
     datasets: [
       {
         label: "Sales",
         data: data.map((item) => item.SALES),
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
-        borderColor: "rgba(75, 192, 192, 1)",
+        backgroundColor: colors,
+        borderColor: colors,
         borderWidth: 1,
       },
     ],
   };
 
+  const options = {
+    plugins: {
+      title: {
+        display: true,
+        text: "Users Gained between 2003-2005",
+      },
+      legend: {
+        display: false,
+      },
+    },
+  };
+
   return (
     <div style={{ width: "800px", height: "600px" }}>
-      <Bar data={chartData} />
+      <Bar data={chartData} options={options} />
     </div>
   );
 };

@@ -24,7 +24,7 @@ export default async function Home() {
 
   return (
     <main className="flex min-h-screen   items-center justify-between p-24">
-      <div className="flex flex-col bg-red-500 items-center">
+      <div className="flex flex-col items-center">
         <h1 className="text-4xl text-black font-bold">Pie Sales and Year</h1>
         <SalesPieChart data={data} />
       </div>
