@@ -72,7 +72,6 @@ async function calculateMetrics(data) {
 
   metrics.profitMargin = (metrics.sales - metrics.totalCost) / metrics.sales;
   metrics.averageOrderValue = metrics.sales / orderCount;
-
   return metrics;
 }
 
@@ -87,8 +86,7 @@ app.get('/sales-metrics', async (req, res) => {
     csvStream.pipe(csv())
       .on('data', (row) => csvData.push(row))
       .on('end', async () => {
-        const metrics = await calculateMetrics(csvData);
-        console.log(metrics); // You can remove this for production
+        const metrics = await calculateMetrics(csvData);// You can remove this for production
         res.json(metrics);
       });
   } catch (error) {
