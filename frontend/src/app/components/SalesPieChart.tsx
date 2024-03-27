@@ -18,8 +18,8 @@ const PieChart: React.FC<Props> = ({ data }) => {
   useEffect(() => {
     if (!data || data.length === 0) return;
 
-    const width = 500;
-    const height = 300;
+    const width = 700;
+    const height = 500;
     const radius = Math.min(width, height) / 2;
 
     const color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -108,7 +108,7 @@ const PieChart: React.FC<Props> = ({ data }) => {
   }, [data]);
 
   return (
-    <>
+    <div style={{ width: "800px", height: "600px" }}>
       <svg ref={svgRef}></svg>
       <div
         id="tooltip"
@@ -118,10 +118,10 @@ const PieChart: React.FC<Props> = ({ data }) => {
           backgroundColor: "white",
           padding: "5px",
           border: "1px solid black",
-          color: "black", 
+          color: "black",
         }}
       ></div>
-    </>
+    </div>
   );
 };
 
