@@ -102,7 +102,8 @@ app.get("/sales-metrics", async (req, res) => {
 app.post("/sales-data", (req, res) => {
   const requestedYear = req.body.year;
 
-  // Initialize an object to store monthly totals
+  // Initialize an array with all months (1-12) to ensure inclusion
+  const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   const monthlyTotals = {};
 
   const stream = fs.createReadStream("./sales_data_sample.csv").pipe(csv());
@@ -117,10 +118,8 @@ app.post("/sales-data", (req, res) => {
       const month = parseInt(row.MONTH_ID, 10);
       const sales = parseFloat(row.SALES);
 
-      // Check if the month key exists in monthlyTotals, add if not
-      if (!monthlyTotals.hasOwnProperty(month)) {
-        monthlyTotals[month] = 0;
-      }
+      // Ensure month is included in monthlyTotals with 0 if missing
+      monthlyTotals[month] = monthlyTotals[month] || 0; // Set to 0 if not yet added
 
       // Add current sale value to the corresponding month's total
       monthlyTotals[month] += sales;
@@ -129,37 +128,32 @@ app.post("/sales-data", (req, res) => {
 
   stream.on("end", () => {
     const salesData = {
-      labels: [],
+      labels: months.map(
+        (month) =>
+          [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ][month - 1]
+      ), // Map month numbers to labels
       datasets: [
         {
           label: `Sales by Month for ${requestedYear}`,
-          data: [],
-          borderColor: "blue", // Customize color as desired
-          backgroundColor: "rgba(255, 99, 132, 0.2)", // Customize background color as desired
+          data: months.map((month) => monthlyTotals[month]), // Map month numbers to totals (using 0 if missing)
+          borderColor: "blue",
+          backgroundColor: "#343fba",
         },
       ],
     };
-
-    // Extract labels and data from monthlyTotals
-    for (const month in monthlyTotals) {
-      salesData.labels.push(
-        [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec",
-        ][month - 1]
-      );
-      salesData.datasets[0].data.push(monthlyTotals[month]);
-    }
 
     res.json(salesData);
   });
