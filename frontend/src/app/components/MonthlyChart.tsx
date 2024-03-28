@@ -1,5 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Chart } from 'react-chartjs-2';
+"use client";
+import React, { useState, useEffect } from "react";
+import { Bar } from "react-chartjs-2";
+import { CategoryScale } from "chart.js";
+import Chart from "chart.js/auto";
+
+
+Chart.register(CategoryScale);
 
 const SalesChart = () => {
   const [salesData, setSalesData] = useState(null);
@@ -7,14 +13,14 @@ const SalesChart = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/api/sales-data`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch(`http://localhost:5000/sales-data`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ year: selectedYear }),
       });
 
       if (!response.ok) {
-        console.error('Error fetching data');
+        console.error("Error fetching data");
         return;
       }
 
@@ -26,17 +32,25 @@ const SalesChart = () => {
   }, [selectedYear]); // Refetch data on year change
 
   const handleYearChange = (event) => {
-    setSelectedYear(parseInt(event.target.value, 10));
+    setSelectedYear(event.target.value);
   };
 
+  // Options for customizing the bar chart
   const options = {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
+      xAxes: [
+        {
+          ticks: {
+            minRotation: 45, // Rotate labels for better readability
+          },
+        },
+      ],
       yAxes: [
         {
           ticks: {
-            beginAtZero: true,
+            beginAtZero: true, // Start y-axis at zero
           },
         },
       ],
@@ -54,7 +68,7 @@ const SalesChart = () => {
       </select>
       {salesData && (
         <div className="mt-4">
-          <Chart type="line" data={salesData} options={options} />
+          <Bar data={salesData} options={options} />
         </div>
       )}
     </div>
