@@ -159,6 +159,80 @@ app.post("/sales-data", (req, res) => {
   });
 });
 
+app.get("/sales-data-by-year", (req, res) => {
+  const stream = fs.createReadStream("./sales_data_sample.csv").pipe(csv());
+
+  const yearData = {}; // Stores data for each year (key: year, value: monthlyTotals object)
+
+  stream.on("error", (error) => {
+    console.error(error);
+    res.status(500).send("Error reading data");
+  });
+
+  stream.on("data", (row) => {
+    const year = parseInt(row.YEAR_ID, 10);
+    const month = parseInt(row.MONTH_ID, 10);
+    const sales = parseFloat(row.SALES);
+
+    // Ensure year exists in yearData, initialize with empty monthlyTotals
+    if (!yearData.hasOwnProperty(year)) {
+      yearData[year] = {};
+    }
+
+    // Ensure month exists in monthlyTotals, initialize with 0
+    if (!yearData[year].hasOwnProperty(month)) {
+      yearData[year][month] = 0;
+    }
+
+    // Add current sale value to the corresponding month's total for the year
+    yearData[year][month] += sales;
+  });
+
+  stream.on("end", () => {
+    const labels = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    const datasets = [];
+
+    // Create datasets for each year with data for all months
+    for (const year in yearData) {
+      const monthlyTotals = yearData[year];
+      const data = [];
+      for (let i = 1; i <= 12; i++) {
+        data.push(monthlyTotals[i] || 0); // Include 0 if month data is missing
+      }
+      datasets.push({
+        label: `Year ${year}`,
+        data,
+        borderColor: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
+          Math.random() * 256
+        )}, ${Math.floor(Math.random() * 256)})`, // Generate random color
+        backgroundColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
+          Math.random() * 256
+        )}, ${Math.floor(Math.random() * 256)}, 0.2)`, // Generate random color with opacity
+      });
+    }
+
+    const salesData = {
+      labels,
+      datasets,
+    };
+
+    res.json(salesData);
+  });
+});
+
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
