@@ -49,20 +49,6 @@ export default async function Home() {
             <SalesMatrix data={data2} />
           </div>
         </div>
-        <div className="flex-1 grid grid-cols-1 gap-4 md:grid-cols-2">
-          <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-4">
-            <h1 className="text-4xl text-black font-bold">
-              Bar Sales and Year
-            </h1>
-            <SalesMatrix data={data2} />
-          </div>
-          <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-4">
-            <h1 className="text-4xl text-black font-bold">
-              Bar Sales and Year
-            </h1>
-            <BarGraph data={data} />
-          </div>
-        </div>
       </div>
     </main>
   );
