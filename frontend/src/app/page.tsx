@@ -35,15 +35,28 @@ export default async function Home() {
   const data2 = await getData2();
 
   return (
-    <main className="flex min-h-screen   items-center justify-between p-24">
-      <div className="flex flex-col items-center">
-        <h1 className="text-4xl text-black font-bold">Pie Sales and Year</h1>
-        <SalesPieChart data={data} />
+    <main className="flex flex-col p-4 gap-4 bg-gray-200 ">
+      <div className="flex-1 grid gap-4 grid-cols-1 md:grid-cols-3 ">
+        <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-4">
+          <h1 className="text-4xl text-black font-bold">Pie Sales and Year</h1>
+          <SalesPieChart data={data} />
+        </div>
+        <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-4">
+          <h1 className="text-4xl text-black font-bold">
+            Bar BarGraph Sales and Year
+          </h1>
+          <SalesMatrix data={data2} />
+        </div>
       </div>
-      <div className="flex flex-col items-center">
-        <h1 className="text-4xl text-black font-bold">Bar Sales and Year</h1>
-        <BarGraph data={data} />
-        <SalesMatrix data={data2} />
+      <div className="flex-1 grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-4">
+          <h1 className="text-4xl text-black font-bold">Bar Sales and Year</h1>
+          <SalesMatrix data={data2} />
+        </div>
+        <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-4">
+          <h1 className="text-4xl text-black font-bold">Bar Sales and Year</h1>
+          <BarGraph data={data} />
+        </div>
       </div>
     </main>
   );
