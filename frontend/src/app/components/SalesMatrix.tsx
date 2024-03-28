@@ -39,7 +39,20 @@ const SalesMatrix: React.FC<Props> = ({ data }) => {
     ],
   };
 
-  return <Bar data={chartData} />;
+
+  const options = {
+    plugins: {
+      title: {
+        display: true,
+        text: "Sales Metrics",
+      },
+      legend: {
+        display: false,
+      },
+    },
+  };
+
+  return <Bar data={chartData} options={options} />;
 };
 
 export default SalesMatrix;

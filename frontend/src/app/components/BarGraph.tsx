@@ -41,7 +41,7 @@ const BarGraph: React.FC<Props> = ({ data }) => {
     plugins: {
       title: {
         display: true,
-        text: "Users Gained between 2003-2005",
+        text: "Total Sales between 2003-2005",
       },
       legend: {
         display: false,

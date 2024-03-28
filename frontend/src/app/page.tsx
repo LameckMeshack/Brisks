@@ -43,7 +43,7 @@ export default async function Home() {
         </div>
         <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-4">
           <h1 className="text-4xl text-black font-bold">
-            Bar BarGraph Sales and Year
+            Sales Metrices
           </h1>
           <SalesMatrix data={data2} />
         </div>
