@@ -3,6 +3,7 @@ const fs = require("fs");
 const csv = require("csv-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const { Colors } = require("chart.js");
 
 const app = express();
 const port = 5000;
@@ -150,7 +151,13 @@ app.post("/sales-data", (req, res) => {
           label: `Sales by Month for ${requestedYear}`,
           data: months.map((month) => monthlyTotals[month]), // Map month numbers to totals (using 0 if missing)
           borderColor: "blue",
-          backgroundColor: "#343fba",
+          backgroundColor: `#${
+            requestedYear === "2003"
+              ? "1f77b4"
+              : requestedYear === "2004"
+              ? "ff7f0e"
+              : "2ca02c"
+          }`,
         },
       ],
     };
@@ -215,12 +222,10 @@ app.get("/sales-data-by-year", (req, res) => {
       datasets.push({
         label: `Year ${year}`,
         data,
-        borderColor: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
-          Math.random() * 256
-        )}, ${Math.floor(Math.random() * 256)})`, // Generate random color
-        backgroundColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
-          Math.random() * 256
-        )}, ${Math.floor(Math.random() * 256)}, 0.2)`, // Generate random color with opacity
+        //show colors based on year
+        borderColor: `#${
+          year === "2003" ? "1f77b4" : year === "2004" ? "ff7f0e" : "2ca02c"
+        }`,
       });
     }
 
