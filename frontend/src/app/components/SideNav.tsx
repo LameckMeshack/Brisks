@@ -24,7 +24,6 @@
 //   );
 // };
 
-
 // export default SideNav;
 "use client";
 import Link from "next/link";
@@ -39,31 +38,23 @@ const SideNav = () => {
 
   return (
     <div className="h-screen bg-gray-200 w-64 fixed left-0 top-0 overflow-auto">
-      <nav className="mt-10 px-6 ">
+      <nav className="mt-10 px-6 flex flex-col gap-4">
+        {" "}
         <Link href="/">
-          <p
-            className={`text-gray-700 text-3xl font-semibold py-4 block hover:text-gray-900 ${
-              isActive("/") ? "text-blue-500" : ""
-            }`}
-          >
+          <p className="text-gray-700 text-xl font-semibold py-2 block hover:text-gray-900 transition duration-300 ease-in-out">
             Home
+            <span className="text-blue-500 block text-xs font-normal mt-1 opacity-0 hover:opacity-100 transition duration-300 ease-in-out">
+              Active
+            </span>{" "}
           </p>
         </Link>
         <Link href="/dashboard">
-          <p
-            className={`text-gray-700 text-3xl font-semibold py-4 block hover:text-gray-900 ${
-              isActive("/dashboard") ? "text-blue-500  text-sm" : ""
-            }`}
-          >
+          <p className="text-gray-700 text-xl font-semibold py-2 block hover:text-gray-900 transition duration-300 ease-in-out">
             Dashboard
           </p>
         </Link>
         <Link href="/monthly">
-          <p
-            className={`text-gray-700 text-3xl font-semibold py-4 block hover:text-gray-900 ${
-              isActive("/monthly") ? "text-blue-500" : ""
-            }`}
-          >
+          <p className="text-gray-700 text-xl font-semibold py-2 block hover:text-gray-900 transition duration-300 ease-in-out">
             Monthly
           </p>
         </Link>
@@ -73,4 +64,3 @@ const SideNav = () => {
 };
 
 export default SideNav;
-
