@@ -9,6 +9,7 @@ const errorHandler = require("./utils/error-handler");
 const processSalesData = require("./controllers/sales-data");
 const processCsv = require("./controllers/ csv-processor");
 const yearFilter = require("./controllers/sales-data-processor");
+const processCustomerData = require("./controllers/customer-segmentation");
 
 const app = express();
 const port = 5000;
@@ -57,6 +58,20 @@ app.get("/sales-metrics", async (req, res) => {
 });
 
 
+app.get("/customer-segments", async (req, res) => {
+  try {
+    const segments = await processCustomerData("./sales_data_sample.csv"); 
+    const segmentCounts = {
+      Low: segments.Low.length,
+      Medium: segments.Medium.length,
+      High: segments.High.length,
+    };
+    res.json(segmentCounts); 
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error processing customer data");
+  }
+});
 
 app.post("/sales-data", async (req, res) => {
   try {
