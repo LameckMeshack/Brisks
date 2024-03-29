@@ -42,7 +42,9 @@ export default async function Home() {
             <h1 className="text-4xl text-black font-bold">
               Pie Sales and Year
             </h1>
-            <SalesPieChart data={data} />
+            {/* only show if 
+          data */}
+            {data ? <SalesPieChart data={data} /> : <p>Loading...</p>}
           </div>
           <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-4">
             <h1 className="text-4xl text-black font-bold">Sales Metrices</h1>
