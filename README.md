@@ -8,7 +8,7 @@ Welcome to the Brisk project! Below are simple steps to set up the project after
 
 1. **Clone the Project:**
     ```
-    git clone <repository_url>
+    git clone ssh/https or download the Brisks repo
     ```
 
 2. **Navigate to Server Directory:**
