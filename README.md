@@ -47,6 +47,6 @@ Welcome to the Brisk project! Below are simple steps to set up the project after
 
     The frontend development server will run on `localhost:3000`. Open your browser and navigate to `http://localhost:3000` to view the project.
 
-That's it! You've successfully set up and run the Brisk project locally. Happy coding! 🚀
+That's it! You've successfully set up and run the Brisk project locally. Happy review! 🚀
 ```
 
