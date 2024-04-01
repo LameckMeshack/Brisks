@@ -1,4 +1,4 @@
-# Bricks
+# Brisks
 ```markdown
 # Brisk Project Setup Guide
 
