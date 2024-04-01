@@ -47,7 +47,7 @@ export default async function Home() {
             {data ? <SalesPieChart data={data} /> : <p>Loading...</p>}
           </div>
           <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-4">
-            <h1 className="text-4xl text-black font-bold">Sales Metrices</h1>
+            <h1 className="text-4xl text-black font-bold"> Total Sales Matrices</h1>
             <SalesMatrix data={data2} />
           </div>
         </div>
